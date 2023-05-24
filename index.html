@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./style.css" />
+    <!-- Load third-party modules here. -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <!-- Load local Javascript files here. -->
+    <script src="./src/settings.js"></script>
+    <script src="./src/fretboard.js"></script>
+    <script src="./src/pattern.js"></script>
+    <script src="./src/download.js"></script>
+    <script src="./src/main.js"></script>
+  </head>
+  <body>
+    <div id="left">
+      <header>
+        <h1>Fretboard Diagram</h1>
+        <address id="author">Josh Chuang</address>
+      </header>
+      <div id="settings">
+        <h2>Settings</h2>
+      </div>
+    </div>
+    <div id="right">
+      <div id="upper">
+        <svg id="fretboard"></svg>
+        <img id="img" />
+        <canvas id="canvas"></canvas>
+      </div>
+      <div id="lower">
+        <div
+          id="data"
+          title='Each line describes a string.&#10;Use "o" or "-" to mark or not mark frets.&#10;Open position count as one fret.&#10;Optionally, use "," at the end of a line to label the markings.'
+        >
+          <h3>Describe Fretboard Markings</h3>
+          <textarea id="input" spellcheck="false"></textarea>
+        </div>
+        <div id="download">
+          <h3>Download Fretboard Diagram</h3>
+          <div class="download-option">
+            <button class="download-button" id="download-svg">Download SVG</button>
+          </div>
+          <div class="download-option">
+            <button class="download-button" id="download-png">Download PNG</button>
+            <div style="display: flex; flex-direction: column">
+              <label>
+                Width (px)
+                <input class="image-dimension" id="png-width" value="900" />
+              </label>
+              <label>
+                Height (px)
+                <input class="image-dimension" id="png-height" value="300" />
+              </label>
+              <label>
+                Keep aspect ratio?
+                <input type="checkbox" checked id="png-keep-ratio" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
