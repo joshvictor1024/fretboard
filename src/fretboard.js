@@ -106,6 +106,9 @@ function drawFretboard(output) {
     .attr('y2', (f) => f.y2);
 }
 
+/**
+ * @param {Marking[]} markings
+ */
 function drawMarkings(markings, output) {
   output.selectAll('.marking').remove(); // Lines may redraw, so markings may redraw even without data change.
   const m = output
@@ -113,6 +116,8 @@ function drawMarkings(markings, output) {
     .data(markings)
     .join('g')
     .classed('marking', true)
+    .classed('marking--highlighted', (m) => m.m === 'h')
+    .classed('marking--textonly', (m) => m.m === 't')
     .attr('transform', function (m) {
       return `translate(${
         spec.getFretPosition(m.f) - spec.marking.size / 2 - spec.marking.margin
@@ -124,6 +129,17 @@ function drawMarkings(markings, output) {
   m.append('text').text((m) => m.t);
 }
 
+/**
+ * @typedef {Object} Marking
+ * @property {number} s string number
+ * @property {number} f fret number
+ * @property {number} m modification
+ * @property {number} t text
+ */
+
+/**
+ * @returns {Marking[]}
+ */
 function parseInput(text) {
   try {
     const result = [];
@@ -137,10 +153,17 @@ function parseInput(text) {
         if (code[j] === 'o') {
           result.push({s: i, f: j, t: tokens[currentTextI] ?? null});
           currentTextI++;
+        } else if (code[j] === 'h') {
+          result.push({s: i, f: j, m: 'h', t: tokens[currentTextI] ?? null});
+          currentTextI++;
+        } else if (code[j] === 'x') {
+          result.push({s: i, f: j, m: 't', t: tokens[currentTextI] ?? null});
+          currentTextI++;
         } else if (code[j] === '-') {
           continue;
         } else {
-          console.error(`unrecognized character ${code[j]}`);
+          alert(`Unrecognized character ${code[j]} in input line ${i + 1}`);
+          return result;
         }
       }
     }

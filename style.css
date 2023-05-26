@@ -140,6 +140,17 @@ footer {
 #canvas {
     display: none;
 }
+.marking--highlighted circle {
+    stroke: rgb(53, 53, 53);
+    fill: rgb(96, 96, 96);
+}
+.marking--highlighted text {
+    fill: white;
+}
+.marking--textonly circle {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
 #lower {
     height: 60vh;
     padding: 30px;

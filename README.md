@@ -22,9 +22,7 @@ Live at https://joshvictor1024.github.io/fretboard/
 - Note name typesetting
   - Sharp and flat symbols
   - Alignment
-- Accented marking
 - Marking shapes
-- Hide marking shape of open strings
 - Fretboard inlays
 - Fret numbers
 - Thicker nut

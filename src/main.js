@@ -10,7 +10,7 @@ window.addEventListener('load', async () => {
   output.attr('viewBox', `0 0 ${spec.bound.w} ${spec.bound.h}`);
 
   // Input
-  document.getElementById('input').value = patterns.mixed;
+  document.getElementById('input').value = patterns.label;
   updateFretboard();
   document.getElementById('input').addEventListener('input', () => {
     updateFretboard();
