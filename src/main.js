@@ -39,5 +39,6 @@ window.addEventListener('load', async () => {
     if (document.getElementById('png-keep-ratio').checked) {
       enforcePngRatio('h');
     }
+    enforcePngDimensionRange();
   });
 });

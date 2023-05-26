@@ -34,7 +34,22 @@ header h1 {
 header p {
     font-size: 14px;
 }
-#settings {
+#tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+#tabs h2 {
+    font-size: 22px;
+}
+.tab--inactive {
+    color: lightgray;
+    cursor: pointer;
+}
+.tab-panel--hidden {
+    display: none;
+}
+.tab-panel {
     flex: 1 1 auto;
     width: 100%;
     overflow-y: scroll;
@@ -58,6 +73,17 @@ header p {
     flex: 0 0 35px;
     text-align: right;
 }
+.download-option {    
+    padding: 5px;
+    display: flex;
+}
+.download-button {
+    height: 20px;
+    width: fit-content;
+}
+.image-dimension {
+    width: 100px;
+}
 footer {
     flex: 0 0 30px;
     margin: auto;
@@ -69,7 +95,7 @@ footer {
     fill: #dddddd;
 }
 #right {
-    flex: 1 0 auto;
+    flex: 1 0 600px;
 }
 #upper {
     width: 100%;
@@ -133,19 +159,4 @@ footer {
     resize: none;
     font-family: monospace;
     font-size: 18px;
-}
-#download {
-    flex: 1 0 auto;
-}
-.download-option {    
-    padding: 5px;
-    display: flex;
-    flex-direction: row;
-    column-gap: 5px;
-}
-.download-button {
-    height: 20px;
-}
-.image-dimension {
-    width: 100px;
 }
