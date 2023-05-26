@@ -45,12 +45,14 @@ function saveSvg(svgEl, filename) {
   URL.revokeObjectURL(svgUrl);
 }
 
+const defaultPngHeight = 300;
 function savePng(svgEl, filename) {
   const svgUrl = createSvgUrl(svgEl);
   const img = document.getElementById('img');
 
-  const w = pngWidthEl?.value ?? 900;
-  const h = pngHeightEl?.value ?? 300;
+  // More integer check
+  const w = Math.round(pngWidthEl?.value) ?? Math.round(defaultPngHeight * spec.bound.w);
+  const h = Math.round(pngHeightEl?.value) ?? defaultPngHeight;
   img.addEventListener('load', () => {
     const canvas = document.getElementById('canvas');
     canvas.width = w;
@@ -65,10 +67,10 @@ function savePng(svgEl, filename) {
   img.src = svgUrl;
 }
 
-// ceil(n/k)*k
-// k is integer
+// ceil(n/k)*k when k is integer
+// ceil(ceil(n/k)*k) when k is not an integer
 function toMultipleOf(n, k) {
-  return Math.ceil(n / k) * k;
+  return Math.ceil(Math.ceil(n / k) * k);
 }
 
 let pngWidthEl = null;
@@ -82,10 +84,10 @@ function validatePngDimension() {
     pngHeightEl.value = 300;
   } else if (isNaN(Number(pngWidthEl.value))) {
     pngHeightEl.value = Math.ceil(Number(pngHeightEl.value));
-    pngWidthEl.value = Number(pngHeightEl.value) * spec.bound.w;
-  } else if (isNaN(Number(pngWidthEl.value))) {
+    pngWidthEl.value = Math.round(Number(pngHeightEl.value) * spec.bound.w);
+  } else if (isNaN(Number(pngHeightEl.value))) {
     pngWidthEl.value = toMultipleOf(pngWidthEl.value, spec.bound.w);
-    pngHeightEl.value = Number(pngWidthEl.value) / spec.bound.w;
+    pngHeightEl.value = Math.round(Number(pngWidthEl.value) / spec.bound.w);
   }
 }
 
@@ -93,9 +95,22 @@ function validatePngDimension() {
 function enforcePngRatio(fixed) {
   if (fixed === 'w') {
     pngWidthEl.value = toMultipleOf(pngWidthEl.value, spec.bound.w);
-    pngHeightEl.value = Number(pngWidthEl.value) / spec.bound.w;
+    pngHeightEl.value = Math.round(Number(pngWidthEl.value) / spec.bound.w);
   }
   if (fixed === 'h') {
-    pngWidthEl.value = Number(pngHeightEl.value) * spec.bound.w;
+    pngWidthEl.value = Math.round(Number(pngHeightEl.value) * spec.bound.w);
+  }
+}
+
+const pngMinHeight = 100; // px
+const pngMaxHeight = 2000; // px
+function enforcePngDimensionRange() {
+  if (Number(pngHeightEl.value) < pngMinHeight) {
+    pngHeightEl.value = pngMinHeight;
+    enforcePngRatio('h');
+  }
+  if (Number(pngHeightEl.value) > pngMaxHeight) {
+    pngHeightEl.value = pngMaxHeight;
+    enforcePngRatio('h');
   }
 }

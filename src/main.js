@@ -1,4 +1,7 @@
 window.addEventListener('load', async () => {
+  // Tabs
+  setupTabs();
+
   // Settings
   setupSettings();
 
@@ -28,6 +31,7 @@ window.addEventListener('load', async () => {
     if (document.getElementById('png-keep-ratio').checked) {
       enforcePngRatio('w');
     }
+    enforcePngDimensionRange();
   });
   pngHeightEl = document.getElementById('png-height');
   pngHeightEl.addEventListener('change', function () {
